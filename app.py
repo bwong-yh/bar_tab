@@ -1,5 +1,12 @@
 from pathlib import Path
 
+def calculate_total(drinks, tip=0.2):
+    total = 0
+
+    for drink, price in drinks:
+        total += price
+
+    return total * (1 + tip)
 
 def serve_user():
     drinks = []
@@ -20,6 +27,8 @@ def serve_user():
     return drinks
 
 def main():
+
+
     # get table number
     try:
         table_number = int(input('Table no: '))
@@ -32,9 +41,14 @@ def main():
 
     # ask for drinks and prices
     drinks = serve_user()
-    print(drinks)
 
-    # calculate tip and total
+    # calculate tip and total  
+    if not drinks:
+        print('No drinks added. Exiting program.')
+        return
+
+    total = calculate_total(drinks)
+    print(round(total, 2))
 
     # create csv
     
