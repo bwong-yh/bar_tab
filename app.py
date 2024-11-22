@@ -1,12 +1,25 @@
 from pathlib import Path
+import csv
+
+def create_csv(path, drinks, sum, tip, total):
+    with path.open('a+', newline='') as file:
+        writer = csv.writer(file)
+
+        writer.writerow(['Drink', 'Price'])
+        writer.writerows(drinks)
+        writer.writerow(['Sum', sum])
+        writer.writerow(['Tip', tip])
+        writer.writerow(['Total', total])
+        print('CSV created')
+
 
 def calculate_total(drinks, tip=0.2):
-    total = 0
+    sum = 0
 
     for drink, price in drinks:
-        total += price
+        sum += price
 
-    return total * (1 + tip)
+    return sum, tip, sum * (1 + tip)
 
 def serve_user():
     drinks = []
@@ -47,11 +60,11 @@ def main():
         print('No drinks added. Exiting program.')
         return
 
-    total = calculate_total(drinks)
-    print(round(total, 2))
+    sum, tip, total = calculate_total(drinks)
 
     # create csv
-    
+    create_csv(path, drinks, sum, tip, total)
+
     return
 
 if __name__ == '__main__':
