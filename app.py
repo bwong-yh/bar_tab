@@ -1,5 +1,24 @@
 from pathlib import Path
 
+
+def serve_user():
+    drinks = []
+    
+    while True:
+        drink = input('Drink (press f to finish): ').strip().lower()
+
+        if drink == 'f':
+            break
+
+        try:
+            price = float(input(f'{drink.title()} price: ').strip())
+            drinks.append((drink.title(), price))        
+        except ValueError:
+            print('Invalid price')
+            continue
+
+    return drinks
+
 def main():
     # get table number
     try:
@@ -10,9 +29,10 @@ def main():
 
     # create path
     path = Path(__file__).parent / f'table_{table_number}.csv'
-    print(path)
 
     # ask for drinks and prices
+    drinks = serve_user()
+    print(drinks)
 
     # calculate tip and total
 
